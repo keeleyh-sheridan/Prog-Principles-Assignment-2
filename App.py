@@ -1,3 +1,5 @@
+import random
+
 class Product:
     def __init__(self):
         self.code = int(input("\nPlease enter the product code (integer from 1-100): "))
@@ -6,6 +8,9 @@ class Product:
         self.salePrice = float(input("Please enter the sale prive: "))
         self.manufactureCost = float(input("Please enter the manufacturing cost: "))
         self.monthlyUnits = int(input("Enter the estimated amount of monthly units manufactured: "))
+
+    def set_stockLevel(self, newStock):
+        self.stockLevel += newStock
 
 product = Product()
 
@@ -20,3 +25,13 @@ Sale Price: {product.salePrice} CAD
 Manufacture Cost: {product.manufactureCost} CAD
 Monthly Production: {product.monthlyUnits} units (Approx.)
 ''')
+
+for i in range(1,13):
+    unitsSold = random.randrange(product.monthlyUnits - 10, product.monthlyUnits + 10)
+
+    product.set_stockLevel(product.monthlyUnits - unitsSold)
+
+    print(f'''Month {i}
+|    Manufactured: {product.monthlyUnits}
+|    Sold: {unitsSold} units
+|    Stock: {product.stockLevel}''')
