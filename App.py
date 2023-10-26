@@ -17,7 +17,7 @@ product = Product()
 print(f'''
 Welcome to Programming Principles Sample Product Inventory
 *******Programming Principles*******
-      
+
 Product Code: {product.code}
 Product Name: {product.name}
 
