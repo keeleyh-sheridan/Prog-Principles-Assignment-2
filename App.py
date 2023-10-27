@@ -21,6 +21,29 @@ class Application:
         monthlyUnits = self.positiveInput("Enter the estimated amount of monthly units manufactured: ", "int")
 
         return code, name, stockLevel, salePrice, manufactureCost, monthlyUnits
+    
+    def monthlyStatement(self, month, monthlyUnits, unitsSold, stockLevel):
+        print(f'''Month {month}
+|    Manufactured: {monthlyUnits}
+|    Sold: {unitsSold} units
+|    Stock: {stockLevel}''')
+        
+    def stockStatement(self, code, name, price, cost, monthlyUnits):
+        print(f'''
+Welcome to Programming Principles Sample Product Inventory
+*******Programming Principles*******
+
+Product Code: {code}
+Product Name: {name}
+
+Sale Price: {price} CAD
+Manufacture Cost: {cost} CAD
+Monthly Production: {monthlyUnits} units (Approx.)
+''')
+    def printFinalProfit(self, profit):
+        print(f"Net profit: ${round(profit, 2)}CAD")
+
+
 
 class Product:
     def __init__(self, code, name, stockLevel, salePrice, manufactureCost, monthlyUnits):
@@ -47,19 +70,10 @@ class Product:
     def setStockLevel(self, newStock):
         self.__stockLevel = newStock
 
-product = Product(*Application.userInput())
+App = Application()
+product = Product(*App.userInput())
 
-print(f'''
-Welcome to Programming Principles Sample Product Inventory
-*******Programming Principles*******
-
-Product Code: {product.getCode()}
-Product Name: {product.getName()}
-
-Sale Price: {product.getSalePrice()} CAD
-Manufacture Cost: {product.getManufactureCost()} CAD
-Monthly Production: {product.getMonthlyUnits()} units (Approx.)
-''')
+App.stockStatement(product.getCode(), product.getName(), product.getSalePrice(), product.getManufactureCost(), product.getMonthlyUnits())
 
 monthlyCost = product.getMonthlyUnits() * product.getManufactureCost()
 unitsSold = 0
@@ -72,10 +86,7 @@ for i in range(1, 13):
 
     totalUnitsSold += unitsSold
 
-    print(f'''Month {i}
-|    Manufactured: {product.getMonthlyUnits()}
-|    Sold: {unitsSold} units
-|    Stock: {product.getStockLevel()}''')
+    App.monthlyStatement(i, product.getMonthlyUnits(), unitsSold, product.getStockLevel())
     
 profit = (product.getSalePrice() * totalUnitsSold) - (product.getMonthlyUnits() * 12 * product.getManufactureCost())
-print(f"Net profit: ${round(profit, 2)}CAD")
+App.printFinalProfit(profit)
