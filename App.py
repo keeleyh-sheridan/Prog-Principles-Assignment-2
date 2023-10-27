@@ -81,11 +81,11 @@ class Product:
         self.__stockLevel = newStock
 
 #Create objects
-App = Application()
-product = Product(*App.userInput())
+app = Application()
+product = Product(*app.userInput())
 
 #Print stock statement
-App.stockStatement(product.getCode(), product.getName(), product.getSalePrice(), product.getManufactureCost(), product.getMonthlyUnits())
+app.stockStatement(product.getCode(), product.getName(), product.getSalePrice(), product.getManufactureCost(), product.getMonthlyUnits())
 
 #Variables for loop calculations
 monthlyCost = product.getMonthlyUnits() * product.getManufactureCost()
@@ -104,8 +104,8 @@ for i in range(1, 13):
 
     totalUnitsSold += unitsSold
 
-    App.monthlyStatement(i, product.getMonthlyUnits(), unitsSold, product.getStockLevel())
+    app.monthlyStatement(i, product.getMonthlyUnits(), unitsSold, product.getStockLevel())
 
 #Print final profit
 profit = (product.getSalePrice() * totalUnitsSold) - (product.getMonthlyUnits() * 12 * product.getManufactureCost())
-App.printFinalProfit(profit)
+app.printFinalProfit(profit)
