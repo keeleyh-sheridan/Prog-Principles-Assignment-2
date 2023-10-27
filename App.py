@@ -95,12 +95,17 @@ totalUnitsSold = 0
 for i in range(1, 13):
     unitsSold = product.getMonthlyUnits() + random.randrange(-10, 10)
     
-    product.setStockLevel(product.getStockLevel() + (product.getMonthlyUnits() - unitsSold))
+    if product.getMonthlyUnits() - unitsSold < 0 and product.getStockLevel() < abs(product.getMonthlyUnits() - unitsSold):
+        unitsSold = product.getStockLevel()
+        product.setStockLevel(0)
+        
+    else:
+        product.setStockLevel(product.getStockLevel() + (product.getMonthlyUnits() - unitsSold))
 
     totalUnitsSold += unitsSold
 
     App.monthlyStatement(i, product.getMonthlyUnits(), unitsSold, product.getStockLevel())
 
-#Print final results
+#Print final profit
 profit = (product.getSalePrice() * totalUnitsSold) - (product.getMonthlyUnits() * 12 * product.getManufactureCost())
 App.printFinalProfit(profit)
